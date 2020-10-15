@@ -47,7 +47,7 @@ public class PostingList {
             return;
 
         //if list is empty or if n is higher than all numbers in the list
-        if (list.size()==0 || n > list.get(right)) {
+        if (list.size() == 0 || n > list.get(right)) {
             list.add(n);
             return;
         } else if (n < list.get(0)) {
