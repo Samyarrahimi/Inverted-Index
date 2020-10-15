@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class SearchClass {
     public static void main(String[] args) {
-        List<String> texts = Arrays.asList("alice", "beowulf", "Email assignment", "frankenstein", "pride", "yellow");
+        List<String> texts = Arrays.asList("alice", "beowulf", "frankenstein", "pride", "yellow");
         InvertedIndex index = new InvertedIndex();
         DocumentStore store = new DocumentStore();
 

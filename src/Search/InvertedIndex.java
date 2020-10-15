@@ -16,12 +16,13 @@ public class InvertedIndex {
         }
         for (String token : distinctTokens) {
             table.putIfAbsent(token, new PostingList());
-            table.get(token).add(doc.getDocId());
+            table.get(token).insert(doc.getDocId());
         }
-
+        /*
+        we don't need to sort the postinglist values because we insert them in the correct order
         for (PostingList list : table.values()) {
             list.sort();
-        }
+        }*/
     }
 
     public PostingList get(String token) {
