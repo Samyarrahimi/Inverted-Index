@@ -13,12 +13,20 @@ public class Document {
         docId = lastId.incrementAndGet();
     }
 
-    public String getBody() {
-        return body;
+    @Override
+    public String toString() {
+        return "Document{" +
+                "name='" + name + '\'' +
+                ", docId=" + docId +
+                '}';
     }
 
     public int getDocId() {
         return docId;
+    }
+
+    public String getBody() {
+        return body;
     }
 
     public String getName() {
@@ -27,13 +35,5 @@ public class Document {
 
     public static AtomicInteger getLastId() {
         return lastId;
-    }
-
-    @Override
-    public String toString() {
-        return "Document{" +
-                "name='" + name + '\'' +
-                ", docId=" + docId +
-                '}';
     }
 }

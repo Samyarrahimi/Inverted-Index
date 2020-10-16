@@ -30,6 +30,7 @@ public class MyFileHandler {
         return table;
     }
 
+
     public void WriteToFile(InvertedIndex index, String path) {
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;

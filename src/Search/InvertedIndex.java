@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class InvertedIndex {
+
     private Map<String, PostingList> table = new HashMap<>();
 
     public void add(Document doc) {

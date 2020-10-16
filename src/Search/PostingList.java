@@ -19,25 +19,6 @@ public class PostingList implements Serializable {
         }
     }
 
-    public List<Integer> getDocIds() {
-        return docIds;
-    }
-
-    public void sort() {
-        Collections.sort(docIds);
-    }
-
-    public int size() {
-        return docIds.size();
-    }
-
-    @Override
-    public String toString() {
-        return "PostingList{" +
-                "docIds=" + docIds +
-                '}';
-    }
-
     public void insert(int n) {
         List<Integer> list = this.getDocIds();
 
@@ -69,6 +50,18 @@ public class PostingList implements Serializable {
         }
     }
 
+    public int size() {
+        return docIds.size();
+    }
+
+    public void sort() {
+        Collections.sort(docIds);
+    }
+
+    public List<Integer> getDocIds() {
+        return docIds;
+    }
+
     public PostingList and(PostingList other) {
         PostingList result = new PostingList();
         int i = 0, j = 0;
@@ -91,7 +84,7 @@ public class PostingList implements Serializable {
     public PostingList or(PostingList other) {
         PostingList result = new PostingList();
         int i = 0, j = 0;
-        while (i < size() && j < size()) {
+        while (i < size() && j < other.size()) {
             int a = docIds.get(i);
             int b = other.docIds.get(j);
             if (a == b) {
@@ -117,14 +110,14 @@ public class PostingList implements Serializable {
         return result;
     }
 
-    public PostingList not() {
-        int[] all = new int[Document.getLastId().incrementAndGet()];
+    public PostingList not(int lastId) {
+        int[] all = new int[lastId + 1];
         for (int i = 0; i < all.length; i++) {
             all[i] = i;
         }
         List<Integer> docIds = getDocIds();
         PostingList result = new PostingList();
-        int i = 1, j = 0;
+        int i = 0, j = 0;
         while (i < all.length && j < docIds.size()) {
             int a = all[i];
             int b = docIds.get(j);
@@ -142,5 +135,10 @@ public class PostingList implements Serializable {
             result.insert(i++);
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "" + docIds;
     }
 }

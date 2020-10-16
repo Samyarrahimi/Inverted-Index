@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class DocumentStore {
+
     private HashMap<Integer, Document> docs = new HashMap<>();
 
     public void add(Document doc) {
