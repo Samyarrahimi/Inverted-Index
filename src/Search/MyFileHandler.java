@@ -1,11 +1,63 @@
 package Search;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MyFileHandler {
 
-    public HashMap<String, PostingList> ReadFromFile(String path) {
+    public static ArrayList<Search.Document> ReadFromXML(String path) {
+        ArrayList<Search.Document> docs = new ArrayList<>();
+        docs.add(new Search.Document("ab0", ""));
+
+        File file = new File(path);
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db;
+        Document doc = null;
+
+        try {
+            db = dbf.newDocumentBuilder();
+            doc = db.parse(file);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        doc.getDocumentElement().normalize();
+
+        NodeList nList = doc.getElementsByTagName("doc");
+        int i = 0;
+        for (int temp = 0; temp < nList.getLength(); temp++) {
+            Node node = nList.item(temp);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) node;
+                NodeList abstracts = eElement.getElementsByTagName("abstract");
+                if (null != abstracts.item(i)) {
+                    String body = abstracts.item(i).getTextContent();
+                    Search.Document document = new Search.Document("ab" + i, body);
+                    docs.add(document);
+                } else {
+                    Search.Document document = new Search.Document("ab" + i, "");
+                    docs.add(document);
+                }
+            }
+        }
+        return docs;
+    }
+
+    public static HashMap<String, PostingList> ReadFromFile(String path) {
         HashMap<String, PostingList> table = null;
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
@@ -30,8 +82,7 @@ public class MyFileHandler {
         return table;
     }
 
-
-    public void WriteToFile(InvertedIndex index, String path) {
+    public static void WriteToFile(InvertedIndex index, String path) {
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
         try {

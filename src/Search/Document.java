@@ -5,12 +5,53 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Document {
     private final String name, body;
     private final int docId;
-    private static final AtomicInteger lastId = new AtomicInteger(0);
+    private static AtomicInteger lastId = new AtomicInteger(-1);
 
     public Document(String name, String body) {
         this.name = name;
         this.body = body;
         docId = lastId.incrementAndGet();
+    }
+
+    public String[] tokenize() {
+
+        String body = this.getBody().toLowerCase();
+
+        // replace !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ with space
+        body = body.replace("!", " ");
+        body = body.replace("\"", " ");
+        body = body.replace("#", " ");
+        body = body.replace("$", " ");
+        body = body.replace("%", " ");
+        body = body.replace("&", " ");
+        body = body.replace("'", " ");
+        body = body.replace("(", " ");
+        body = body.replace(")", " ");
+        body = body.replace("*", " ");
+        body = body.replace("+", " ");
+        body = body.replace(",", " ");
+        body = body.replace("-", " ");
+        body = body.replace(".", " ");
+        body = body.replace("/", " ");
+        body = body.replace(":", " ");
+        body = body.replace(";", " ");
+        body = body.replace("<", " ");
+        body = body.replace("=", " ");
+        body = body.replace(">", " ");
+        body = body.replace("?", " ");
+        body = body.replace("@", " ");
+        body = body.replace("[", " ");
+        body = body.replace("]", " ");
+        body = body.replace("\\", " ");
+        body = body.replace("^", " ");
+        body = body.replace("_", " ");
+        body = body.replace("{", " ");
+        body = body.replace("}", " ");
+        body = body.replace("|", " ");
+        body = body.replace("~", " ");
+        body = body.replace("،", " ");
+
+        return body.split("\\s+");
     }
 
     @Override

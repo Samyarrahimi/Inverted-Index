@@ -50,6 +50,10 @@ public class PostingList implements Serializable {
         }
     }
 
+    public void add(int id) {
+        docIds.add(id);
+    }
+
     public int size() {
         return docIds.size();
     }
@@ -69,7 +73,7 @@ public class PostingList implements Serializable {
             int a = docIds.get(i);
             int b = other.docIds.get(j);
             if (a == b) {
-                result.insert(a);
+                result.add(a);
                 i++;
                 j++;
             } else if (a < b) {
@@ -88,24 +92,55 @@ public class PostingList implements Serializable {
             int a = docIds.get(i);
             int b = other.docIds.get(j);
             if (a == b) {
-                result.insert(a);
+                result.add(a);
                 i++;
                 j++;
             } else if (a < b) {
-                result.insert(a);
+                result.add(a);
                 i++;
             } else {
-                result.insert(b);
+                result.add(b);
                 j++;
             }
         }
         while (i < size()) {
-            result.insert(docIds.get(i));
+            result.add(docIds.get(i));
             i++;
         }
         while (j < other.size()) {
-            result.insert(other.docIds.get(j));
+            result.add(other.docIds.get(j));
             j++;
+        }
+        return result;
+    }
+
+    public PostingList nott(int lastId) {
+        lastId += 1;
+        List<Integer> docIds = getDocIds();
+        //Object[] objects = docIds.toArray();
+        /*
+        int[]
+        for (int i = 0; i < objects.length; i++) {
+
+        }*/
+        PostingList result = new PostingList();
+        int i = 1, j = 1;
+        while (i < lastId && j < docIds.size()) {
+            //System.out.println(i + " " + j);
+            int a = i;
+            int b = docIds.get(j);
+            if (a < b) {
+                result.add(a);
+                i++;
+            } else if (a == b) {
+                i++;
+                j++;
+            } else {
+                j++;
+            }
+        }
+        while (i < lastId) {
+            result.add(i++);
         }
         return result;
     }
@@ -122,7 +157,7 @@ public class PostingList implements Serializable {
             int a = all[i];
             int b = docIds.get(j);
             if (a < b) {
-                result.insert(a);
+                result.add(a);
                 i++;
             } else if (a == b) {
                 i++;
@@ -132,7 +167,7 @@ public class PostingList implements Serializable {
             }
         }
         while (i < all.length) {
-            result.insert(i++);
+            result.add(i++);
         }
         return result;
     }

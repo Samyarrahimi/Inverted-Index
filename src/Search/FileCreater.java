@@ -8,21 +8,22 @@ import java.util.Scanner;
 
 public class FileCreater {
     public static void main(String[] args) {
+        /*
         List<String> texts = Arrays.asList("alice", "beowulf", "frankenstein", "pride", "yellow");
         Document[] documents = InitializeDocuments(texts);
         InvertedIndex index = new InvertedIndex();
         DocumentStore store = new DocumentStore();
         for (int i = 0; i < documents.length; i++) {
             store.add(documents[i]);
-            index.add(documents[i]);
+            index.add(documents[i].tokenize(), documents[i].getDocId());
         }
 
         Scanner sc = new Scanner(System.in);
-        MyFileHandler myFileHandler = new MyFileHandler();
         System.out.println("Please Enter where do you want to save your InvertedIndex : ");
         System.out.println("example -> E:\\invertedIndex.txt");
         String writePath = sc.next();
-        myFileHandler.WriteToFile(index, writePath);// write hashMap to file
+        MyFileHandler.WriteToFile(index, writePath);// write hashMap to file
+         */
     }
 
     private static Document[] InitializeDocuments(List<String> texts) {
