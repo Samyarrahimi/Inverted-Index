@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class FileCreater {
     public static void main(String[] args) {
-        /*
+
         List<String> texts = Arrays.asList("alice", "beowulf", "frankenstein", "pride", "yellow");
         Document[] documents = InitializeDocuments(texts);
         InvertedIndex index = new InvertedIndex();
@@ -23,7 +23,7 @@ public class FileCreater {
         System.out.println("example -> E:\\invertedIndex.txt");
         String writePath = sc.next();
         MyFileHandler.WriteToFile(index, writePath);// write hashMap to file
-         */
+
     }
 
     private static Document[] InitializeDocuments(List<String> texts) {

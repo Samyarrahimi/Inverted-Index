@@ -114,37 +114,6 @@ public class PostingList implements Serializable {
         return result;
     }
 
-    public PostingList nott(int lastId) {
-        lastId += 1;
-        List<Integer> docIds = getDocIds();
-        //Object[] objects = docIds.toArray();
-        /*
-        int[]
-        for (int i = 0; i < objects.length; i++) {
-
-        }*/
-        PostingList result = new PostingList();
-        int i = 1, j = 1;
-        while (i < lastId && j < docIds.size()) {
-            //System.out.println(i + " " + j);
-            int a = i;
-            int b = docIds.get(j);
-            if (a < b) {
-                result.add(a);
-                i++;
-            } else if (a == b) {
-                i++;
-                j++;
-            } else {
-                j++;
-            }
-        }
-        while (i < lastId) {
-            result.add(i++);
-        }
-        return result;
-    }
-
     public PostingList not(int lastId) {
         int[] all = new int[lastId + 1];
         for (int i = 0; i < all.length; i++) {
