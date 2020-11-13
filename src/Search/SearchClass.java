@@ -57,6 +57,7 @@ public class SearchClass {
             if (query.equals("quit"))
                 return;
 
+
             PostingList result = new PostingList();
             String[] str = query.toLowerCase().split("\\s+");
             Stack<String> stack = new Stack<>();
