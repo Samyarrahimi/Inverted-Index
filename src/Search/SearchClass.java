@@ -48,7 +48,7 @@ public class SearchClass {
         System.out.println("Enter quit when you want to end the program.");
 
         int doNot = 0;
-        int doAnd = 0;//0 : and  1 : or
+        int doAnd = 0;//1 : and  0 : or
         int totalDocNum = Document.getLastId().get();
         while (true) {
             System.out.println("Enter your query : ");
