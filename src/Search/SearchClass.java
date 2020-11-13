@@ -47,10 +47,11 @@ public class SearchClass {
 
         System.out.println("Enter quit when you want to end the program.");
 
-        int doNot = 0;
-        int doAnd = 0;//0 : and  1 : or
         int totalDocNum = Document.getLastId().get();
         while (true) {
+            int doNot = 0;
+            int doAnd = 1;//1 : and  0 : or
+            int firstTime = 1;
             System.out.println("Enter your query : ");
             String query = in.nextLine();
             if (query.equals("quit"))
@@ -76,11 +77,13 @@ public class SearchClass {
                         list = list.not(totalDocNum);
                         doNot = 0;
                     }
-                    if (doAnd == 1) {
+                    if (doAnd == 1 && firstTime == 0) {
                         result = result.and(list);
-                        doAnd = 0;
-                    } else if (doAnd == 0) {
+                        doAnd = 1;
+                    } else if (doAnd == 0 || firstTime == 1) {
                         result = result.or(list);
+                        doAnd = 1;
+                        firstTime = 0;
                     }
                 }
             }
