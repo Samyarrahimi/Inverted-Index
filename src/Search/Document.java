@@ -13,6 +13,17 @@ public class Document {
         docId = lastId.incrementAndGet();
     }
 
+    public void normalize(String[] tokens) {
+        for (int i = 0; i < tokens.length; i++) {
+                tokens[i] = tokens[i].replaceAll("[ىﻱئ]", "ی");
+                tokens[i] = tokens[i].replaceAll("[َُِ]", "");// a e o
+                tokens[i] = tokens[i].replace("ة", "ه");
+                tokens[i] = tokens[i].replace("ك", "ک");
+                tokens[i] = tokens[i].replace("ؤ", "و");
+                tokens[i] = tokens[i].replace("ٔ", "");// hamze
+        }
+    }
+
     public String[] tokenize() {
 
         String body = this.getBody().toLowerCase();

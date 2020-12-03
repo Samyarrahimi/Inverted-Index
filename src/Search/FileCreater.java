@@ -15,7 +15,7 @@ public class FileCreater {
         DocumentStore store = new DocumentStore();
         for (int i = 0; i < documents.length; i++) {
             store.add(documents[i]);
-            index.add(documents[i].tokenize(), documents[i].getDocId());
+            index.add(documents[i]);
         }
 
         Scanner sc = new Scanner(System.in);

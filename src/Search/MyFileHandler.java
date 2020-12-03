@@ -16,8 +16,8 @@ import java.util.HashMap;
 public class MyFileHandler {
 
     public static ArrayList<Search.Document> ReadFromXML(String path) {
-        ArrayList<Search.Document> docs = new ArrayList<>();
-        docs.add(new Search.Document("ab0", ""));
+        ArrayList<Search.Document> documents = new ArrayList<>();
+        documents.add(new Search.Document("ab0", ""));
 
         File file = new File(path);
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -37,24 +37,24 @@ public class MyFileHandler {
 
         doc.getDocumentElement().normalize();
 
-        NodeList nList = doc.getElementsByTagName("doc");
+        NodeList docs = doc.getElementsByTagName("doc");
         int i = 0;
-        for (int temp = 0; temp < nList.getLength(); temp++) {
-            Node node = nList.item(temp);
+        for (int tmp = 0; tmp < docs.getLength(); tmp++) {
+            Node node = docs.item(tmp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element eElement = (Element) node;
                 NodeList abstracts = eElement.getElementsByTagName("abstract");
                 if (null != abstracts.item(i)) {
                     String body = abstracts.item(i).getTextContent();
                     Search.Document document = new Search.Document("ab" + i, body);
-                    docs.add(document);
+                    documents.add(document);
                 } else {
                     Search.Document document = new Search.Document("ab" + i, "");
-                    docs.add(document);
+                    documents.add(document);
                 }
             }
         }
-        return docs;
+        return documents;
     }
 
     public static HashMap<String, PostingList> ReadFromFile(String path) {

@@ -10,38 +10,23 @@ public class SearchClass {
         long start = System.currentTimeMillis();
         ArrayList<Document> documents = MyFileHandler.ReadFromXML("C:\\Users\\Admin\\Desktop\\simple.xml");
         System.out.println("read from file :\t" + (System.currentTimeMillis() - start) + " seconds");
-
-        String[][] tokens = new String[documents.size()][];
-        long start1 = System.currentTimeMillis();
-        for (int i = 0; i < tokens.length; i++)
-            tokens[i] = documents.get(i).tokenize();
-        long finish1 = System.currentTimeMillis();
-        System.out.println("tokenization :\t" + (finish1 - start1) + " seconds");
-
-
-        long start2 = System.currentTimeMillis();
-        normalize(tokens);
-        long finish2 = System.currentTimeMillis();
-        System.out.println("normalization :\t" + (finish2 - start2) + " seconds");
-
+        System.out.println("indexing started!");
 
         InvertedIndex index = new InvertedIndex();
         DocumentStore documentStore = new DocumentStore();
-        long start3 = System.currentTimeMillis();
-        for (int i = 0; i < tokens.length; i++) {
-            index.add(tokens[i], i);
+        start = System.currentTimeMillis();
+        for (int i = 0; i < documents.size(); i++) {
+            index.add(documents.get(i));
             documentStore.add(documents.get(i));
         }
-        long finish3 = System.currentTimeMillis();
-        System.out.println("indexing :\t" + (finish3 - start3) + " seconds");
-
-
+        System.out.println("indexing :\t" + (System.currentTimeMillis() - start) + " seconds");
         System.out.println();
         System.out.println("table has this amount of tokens : ");
         System.out.println(index.getTable().size());
         System.out.println("total number of documents : ");
         System.out.println(Document.getLastId());
         System.out.println();
+
 
         HashMap<String, PostingList> table = (HashMap<String, PostingList>) index.getTable();
 
@@ -56,7 +41,6 @@ public class SearchClass {
             String query = in.nextLine();
             if (query.equals("quit"))
                 return;
-
 
             PostingList result = new PostingList();
             String[] str = query.toLowerCase().split("\\s+");
@@ -88,14 +72,21 @@ public class SearchClass {
                     }
                 }
             }
+
             System.out.println("Result is : ");
-            List<Integer> docIds = result.getDocIds();
-            int limit = 500 < docIds.size() ? 500 : docIds.size();
-            for (int i = 0; i < limit; i++) {
-                System.out.print(docIds.get(i) + "\t");
-                if (i % 25 == 0 && i != 0)
+            Set<Integer> docIds = result.getPlist().keySet();
+            Iterator<Integer> it = docIds.iterator();
+            int i = 0;
+            while (it.hasNext()) {
+                if (i % 15 == 0) {
                     System.out.println();
+                }
+                if (i == 100)
+                    break;
+                System.out.print(it.next() + "\t");
+                i++;
             }
+
             System.out.println();
             System.out.println();
         }
@@ -107,19 +98,6 @@ public class SearchClass {
                 System.out.println(tokens[i][j]);
             }
             System.out.println();
-        }
-    }
-
-    private static void normalize(String[][] tokens) {
-        for (int i = 0; i < tokens.length; i++) {
-            for (int j = 0; j < tokens[i].length; j++) {
-                tokens[i][j] = tokens[i][j].replaceAll("[ىﻱئ]", "ی");
-                tokens[i][j] = tokens[i][j].replaceAll("[َُِ]", "");// a e o
-                tokens[i][j] = tokens[i][j].replace("ة", "ه");
-                tokens[i][j] = tokens[i][j].replace("ك", "ک");
-                tokens[i][j] = tokens[i][j].replace("ؤ", "و");
-                tokens[i][j] = tokens[i][j].replace("ٔ", "");// hamze
-            }
         }
     }
 }
